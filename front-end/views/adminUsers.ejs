@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head", { title: "Manage Users", cssFile: "adminUsers" }) %>
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("partials/navbar") %>
+    <%- include("partials/alerts") %>
+    <%- include("partials/warningModal") %>
+    <%- include("users/modals") %>
+
+    <main class="container my-5">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-warning"><i class="bi bi-people-fill"></i> Manage Users</h1>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
+          <i class="bi bi-person-plus-fill"></i> Add User
+        </button>
+      </div>
+      <%- include("partials/adminUserSearch") %>
+
+      <% if (users.length === 0) { %>
+        <div class="alert alert-info">No users found.</div>
+      <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-dark table-striped align-middle admin-orders-table">
+            <thead class="table-warning text-dark">
+              <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Membership</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% users.forEach(user => { %>
+                <tr data-search="<%= [
+                  user.id,
+                  user.username,
+                  user.email,
+                  user.firstname,
+                  user.lastname,
+                  user.Role?.name,
+                  user.Membership?.name,
+                  user.isDeleted ? 'deactivated' : 'active'
+                ].join(' ') %>">
+                  <td><%= user.id %></td>
+                  <td><%= user.username %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.firstname %> <%= user.lastname %></td>
+
+                  <td>
+                    <select class="form-select form-select-sm role-select" data-user-id="<%= user.id %>">
+                      <% roles.forEach(role => { %>
+                        <option value="<%= role.id %>"
+                                data-default-membership="<%= role.defaultMembershipId %>"
+                                <%= role.id === user.roleId ? "selected" : "" %>>
+                          <%= role.name %>
+                        </option>
+                      <% }) %>
+                    </select>
+
+                  </td>
+
+                  <td>
+                    <select class="form-select form-select-sm membership-select" data-user-id="<%= user.id %>">
+                      <% memberships.forEach(m => { %>
+                        <option value="<%= m.name %>" <%= user.Membership?.name === m.name ? "selected" : "" %>><%= m.name %></option>
+                      <% }) %>
+                    </select>
+                  </td>
+
+                  <td>
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input toggle-user-status"
+                        type="checkbox"
+                        data-user-id="<%= user.id %>"
+                        <%= user.isDeleted ? "" : "checked" %>
+                      />
+                      <label class="form-check-label">
+                        <%= user.isDeleted ? "Deactivated" : "Active" %>
+                      </label>
+                    </div>
+                  </td>
+
+                  <td><%= new Date(user.createdAt).toLocaleDateString("no-NO") %></td>
+
+                  <td>
+                    <div class="d-flex gap-2">
+                      <button
+                        class="btn btn-sm btn-primary edit-user-btn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editUserModal"
+                        data-user='<%- JSON.stringify(user) %>'
+                        title="Edit User"
+                      >
+                        <i class="bi bi-pencil-square"></i>
+                      </button>
+                      <button
+                        class="btn btn-sm btn-danger delete-user"
+                        data-user-id="<%= user.id %>"
+                        title="Delete Permanently"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </main>
+
+    <%- include("partials/footer") %>
+
+    <script>
+      window.MEMBERSHIPS = <%- JSON.stringify(memberships) %>;
+    </script>
+    <script type="module" src="/javascripts/adminUsers.js"></script>
+
+
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+      <i class="bi bi-arrow-up-short"></i>
+      <span class="visually-hidden">Back to top</span>
+    </button>
+  </body>
+</html>

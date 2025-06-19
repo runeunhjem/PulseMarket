@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head", { cssFile: "index" }) %>
+
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("partials/navbar") %>
+    <%- include("partials/alerts") %>
+    <!-- Hero Section -->
+
+    <div class="container text-center mt-5">
+      <h1 class="text-warning"><i class="bi bi-lightning-charge"></i> Welcome to PulseMarket</h1>
+
+      <!-- Category Buttons -->
+      <div class="container mt-4">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-10 col-lg-8">
+            <div id="category-nav" class="d-flex flex-wrap justify-content-center gap-2">
+              <!-- Injected dynamically from loadCategories.js -->
+              <a href="/products" class="btn btn-outline-light category-btn" data-category="">All</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Banner Placeholder -->
+      <div class="container mt-4">
+        <a href="/products" class="text-decoration-none">
+          <span class="visually-hidden">Go to Products Page - Summer Sale</span>
+          <div class="placeholder-banner bg-dark text-white text-center py-5 rounded">
+            <h2 class="mb-2">😎 Big Summer Sale - Up to 50% Off!</h2>
+            <p class="mb-0">Limited time offers on top brands - don't miss out!</p>
+          </div>
+        </a>
+      </div>
+
+      <p class="lead text-light mt-3">
+        Discover hot deals on phones, tablets, TVs and more. Shop smarter, faster, right here at PulseMarket.
+      </p>
+    </div>
+
+    <!-- Special Offers Section -->
+    <div class="container my-5">
+      <h3 class="text-center text-light mb-4">Special Offers & Campaigns</h3>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <a href="/products" class="text-decoration-none">
+            <div class="card h-100 text-white bg-dark border-0 shadow">
+              <div class="card-body">
+                <h4 class="card-title">Weekend Flash Sale</h4>
+                <p class="card-text">Enjoy exclusive deals until Sunday midnight.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="/products" class="text-decoration-none">
+            <div class="card h-100 text-white bg-dark border-0 shadow">
+              <div class="card-body">
+                <h4 class="card-title">Buy One, Get One</h4>
+                <p class="card-text">Selected items include a free second product!</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="/products" class="text-decoration-none">
+            <div class="card h-100 text-white bg-dark border-0 shadow">
+              <div class="card-body">
+                <h4 class="card-title">Free Shipping Week</h4>
+                <p class="card-text">No delivery fees on all orders over 500 NOK.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <%- include("partials/footer") %>
+    <script src="/javascripts/loadCategories.js" type="module"></script>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+      <i class="bi bi-arrow-up-short"></i>
+      <span class="visually-hidden">Back to top</span>
+    </button>
+  </body>
+</html>

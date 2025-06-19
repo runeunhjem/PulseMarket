@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head", { title: "Manage Memberships", cssFile: "adminMemberships" }) %>
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("partials/navbar") %>
+    <%- include("partials/alerts") %>
+
+    <main class="container my-5">
+      <h1 class="text-warning mb-4"><i class="bi bi-gem"></i> Manage Memberships</h1>
+
+      <div class="mb-3 text-end">
+        <button class="btn btn-success add-btn" data-bs-toggle="modal" data-bs-target="#addMembershipModal">
+          <i class="bi bi-plus-circle me-1"></i> Add Membership
+        </button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-dark table-striped admin-memberships-table align-middle">
+          <thead class="table-warning text-dark">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Min Qty</th>
+              <th>Max Qty</th>
+              <th>Discount (%)</th>
+              <th>Created</th>
+              <th>Updated</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="membership-body">
+            <% memberships.forEach(m => { %>
+              <tr>
+                <td><%= m.id %></td>
+                <td><%= m.name %></td>
+                <td><%= m.minQty %></td>
+                <td><%= m.maxQty ?? "-" %></td>
+                <td><%= m.discount %></td>
+                <td><%= new Date(m.createdAt).toLocaleDateString() %></td>
+                <td><%= new Date(m.updatedAt).toLocaleDateString() %></td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-primary edit-membership-btn"
+                    data-id="<%= m.id %>"
+                    data-name="<%= m.name %>"
+                    data-minqty="<%= m.minQty %>"
+                    data-maxqty="<%= m.maxQty %>"
+                    data-discount="<%= m.discount %>"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editMembershipModal">
+                    <i class="bi bi-pencil-square"></i>
+                  </button>
+                  <button
+                    class="btn btn-sm btn-danger delete-membership-btn"
+                    data-id="<%= m.id %>"
+                    data-name="<%= m.name %>">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <%- include("partials/footer") %>
+    <script src="/javascripts/adminMemberships.js" type="module"></script>
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+      <i class="bi bi-arrow-up-short"></i>
+      <span class="visually-hidden">Back to top</span>
+    </button>
+    <%- include("partials/warningModal") %>
+    <%- include("memberships/modals") %>
+  </body>
+</html>

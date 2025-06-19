@@ -1,0 +1,49 @@
+<!-- Sort Dropdown -->
+<div class="dropdown d-inline me-2">
+  <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">Sort</button>
+  <ul class="dropdown-menu dropdown-menu-dark">
+    <% const selectedSort = typeof sort !== "undefined" ? sort : ""; %>
+    <li>
+      <button
+        class="dropdown-item <%= selectedSort === 'price-asc' ? 'active disabled' : '' %>"
+        onclick="submitSort('price-asc')">
+        Price: Low to High
+      </button>
+    </li>
+    <li>
+      <button
+        class="dropdown-item <%= selectedSort === 'price-desc' ? 'active disabled' : '' %>"
+        onclick="submitSort('price-desc')">
+        Price: High to Low
+      </button>
+    </li>
+    <li>
+      <button
+        class="dropdown-item <%= selectedSort === 'name-asc' ? 'active disabled' : '' %>"
+        onclick="submitSort('name-asc')">
+        Name: A-Z
+      </button>
+    </li>
+    <li>
+      <button
+        class="dropdown-item <%= selectedSort === 'name-desc' ? 'active disabled' : '' %>"
+        onclick="submitSort('name-desc')">
+        Name: Z-A
+      </button>
+    </li>
+    <li>
+      <button
+        class="dropdown-item <%= selectedSort === 'created-desc' ? 'active disabled' : '' %>"
+        onclick="submitSort('created-desc')">
+        Newest First
+      </button>
+    </li>
+    <li>
+      <button
+        class="dropdown-item <%= selectedSort === 'created-asc' ? 'active disabled' : '' %>"
+        onclick="submitSort('created-asc')">
+        Oldest First
+      </button>
+    </li>
+  </ul>
+</div>

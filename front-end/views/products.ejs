@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head", { cssFile: "products" }) %>
+  <% if (!user || user.roleId !== 1) { %>
+    <% if (includeDeleted) { %>
+      <script>
+        window.location.href = "/products";
+      </script>
+    <% } %>
+  <% } %>
+
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("partials/navbar") %>
+
+    <main class="container mt-1">
+      <%- include("partials/alerts") %>
+
+
+      <%- include("partials/searchForm") %>
+      <div class="d-flex justify-content-end mb-3 gap-2">
+        <%- include("partials/sortDropdown") %>
+        <%- include("partials/filters") %>
+      </div>
+
+      <% if (products.length === 0) { %>
+        <p class="text-center text-light">No products found.</p>
+      <% } else { %>
+        <div class="row g-4 mt-4">
+          <% products.forEach(product => { %>
+            <div class="col-md-4">
+              <%- include("partials/productCard", { product, user }) %>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </main>
+
+    <%- include("partials/footer") %>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+      <i class="bi bi-arrow-up-short"></i>
+      <span class="visually-hidden">Back to top</span>
+    </button>
+
+    <%- include("partials/warningModal") %>
+  </body>
+</html>

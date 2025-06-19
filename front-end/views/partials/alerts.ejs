@@ -1,0 +1,12 @@
+<% if (messages.success.length) { %>
+  <div class="alert alert-success mt-3 fade show text-center" role="alert"><%= messages.success[0] %></div>
+<% } %>
+<% if (messages.error.length) { %>
+  <div class="alert alert-danger mt-3 fade show text-center" role="alert"><%= messages.error[0] %></div>
+<% } %>
+
+<script>
+  setTimeout(() => {
+    document.querySelectorAll(".alert").forEach(alert => alert.remove());
+  }, 4000);
+</script>

@@ -1,0 +1,76 @@
+<!-- ADD MEMBERSHIP MODAL -->
+<div class="modal fade" id="addMembershipModal" tabindex="-1" aria-labelledby="addMembershipModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="addMembershipForm" class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addMembershipModalLabel">Add Membership</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label for="add-name" class="form-label">Name</label>
+        <input id="add-name" type="text" name="name" class="form-control mb-2" required />
+
+        <label for="add-minQty" class="form-label">Min Qty</label>
+        <input id="add-minQty" type="number" name="minQty" class="form-control mb-2" min="0" required />
+
+        <label for="add-maxQty" class="form-label">Max Qty (optional)</label>
+        <input id="add-maxQty" type="number" name="maxQty" class="form-control mb-2" min="0" />
+
+        <label for="add-discount" class="form-label">Discount (%)</label>
+        <input id="add-discount" type="number" name="discount" class="form-control" min="0" max="100" required />
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Add Membership</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- EDIT MEMBERSHIP MODAL -->
+<div class="modal fade" id="editMembershipModal" tabindex="-1" aria-labelledby="editMembershipModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="editMembershipForm" class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editMembershipModalLabel">Edit Membership</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="id" />
+
+        <label for="edit-name" class="form-label">Name</label>
+        <input id="edit-name" type="text" name="name" class="form-control mb-2" required />
+
+        <label for="edit-minQty" class="form-label">Min Qty</label>
+        <input id="edit-minQty" type="number" name="minQty" class="form-control mb-2" min="0" required />
+
+        <label for="edit-maxQty" class="form-label">Max Qty (optional)</label>
+        <input id="edit-maxQty" type="number" name="maxQty" class="form-control mb-2" min="0" />
+
+        <label for="edit-discount" class="form-label">Discount (%)</label>
+        <input id="edit-discount" type="number" name="discount" class="form-control" min="0" max="100" required />
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- DELETE MEMBERSHIP MODAL -->
+<div class="modal fade" id="deleteMembershipModal" tabindex="-1" aria-labelledby="deleteMembershipModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light border-warning">
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title" id="deleteMembershipModalLabel">Warning</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete <strong id="membershipToDeleteName"></strong>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="confirmDeleteMembership" type="button" class="btn btn-warning">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

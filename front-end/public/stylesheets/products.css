@@ -1,0 +1,88 @@
+/* Ensure card consistency */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #1e1e1e;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  padding-top: 1.5rem;
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: contain;
+  width: 100%;
+}
+
+.card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  min-height: 3rem;
+  line-height: 1.5rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  flex-grow: 1;
+  color: #ccc;
+}
+
+.card-body p {
+  margin: 0.25rem 0;
+}
+
+.card-body .badge {
+  align-self: start;
+  margin-top: 0.5rem;
+  background-color: #c0fd8e;
+  max-width: 250px;
+}
+
+/* Filter Panel */
+.filter-panel {
+  position: fixed;
+  top: 0;
+  right: -350px;
+  width: 300px;
+  height: 100%;
+  background-color: #1e1e1e;
+  z-index: 1050;
+  padding: 80px 20px 20px;
+  transition: right 0.3s ease-in-out;
+  border-left: 2px solid #444;
+  overflow-y: auto;
+}
+
+.filter-panel.open {
+  right: 0;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1049;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}

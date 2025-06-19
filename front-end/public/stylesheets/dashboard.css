@@ -1,0 +1,81 @@
+.card-body {
+  min-height: 240px;
+}
+
+/* Custom color palette for icons, badges, and buttons */
+.card-products i,
+.card-products .badge,
+.card-products .btn {
+  color: #ffb347;
+  border-color: #ffb347;
+}
+.card-products .badge {
+  background-color: #ffb347;
+  color: #2c2c2c;
+}
+
+.card-categories i,
+.card-categories .badge,
+.card-categories .btn {
+  color: #66d9ef;
+  border-color: #66d9ef;
+}
+.card-categories .badge {
+  background-color: #66d9ef;
+  color: #2c2c2c;
+}
+
+.card-brands i,
+.card-brands .badge,
+.card-brands .btn {
+  color: #fa6dc4;
+  border-color: #fa6dc4;
+}
+.card-brands .badge {
+  background-color: #fa6dc4;
+  color: #2c2c2c;
+}
+
+.card-users i,
+.card-users .badge,
+.card-users .btn {
+  color: #f5f5f5;
+  border-color: #f5f5f5;
+}
+.card-users .badge {
+  background-color: #f5f5f5;
+  color: #2c2c2c;
+}
+
+.card-orders i,
+.card-orders .badge,
+.card-orders .btn {
+  color: #1abc9c;
+  border-color: #1abc9c;
+}
+.card-orders .badge {
+  background-color: #1abc9c;
+  color: #2c2c2c;
+}
+
+.card-memberships i,
+.card-memberships .badge,
+.card-memberships .btn {
+  color: #ffd700;
+  border-color: #ffd700;
+}
+.card-memberships .badge {
+  background-color: #ffd700;
+  color: #2c2c2c;
+}
+
+.card-roles i,
+.card-roles .badge,
+.card-roles .btn {
+  color: #78b1f3;
+  border-color: #78b1f3;
+}
+.card-roles .badge {
+  background-color: #78b1f3;
+  color: #2c2c2c;
+}

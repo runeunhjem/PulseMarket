@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head", { title, cssFile: "adminProducts" }) %>
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("partials/navbar") %>
+
+    <main class="container my-5">
+      <h1 class="text-warning mb-4"><i class="bi bi-box-seam"></i> Manage Products</h1>
+
+      <!-- Filter/Search/Sort -->
+      <form method="get" action="<%= formAction %>" class="row g-3 align-items-end mb-4">
+        <div class="col-md-3">
+          <label for="category" class="form-label text-light">Category</label>
+          <select name="category" id="category" class="form-select">
+            <option value="">All</option>
+            <% filters.categories.forEach(category => { %>
+              <option value="<%= category.name %>" <%= filters.category.includes(category.name) ? 'selected' : '' %>>
+                <%= category.name %>
+              </option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label for="brand" class="form-label text-light">Brand</label>
+          <select name="brand" id="brand" class="form-select">
+            <option value="">All</option>
+            <% filters.brands.forEach(brand => { %>
+              <option value="<%= brand.name %>" <%= filters.brand.includes(brand.name) ? 'selected' : '' %>>
+                <%= brand.name %>
+              </option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label for="sort" class="form-label text-light">Sort by</label>
+          <select name="sort" id="sort" class="form-select">
+            <option value="created-desc" <%= sort === "created-desc" ? "selected" : "" %>>Newest</option>
+            <option value="created-asc" <%= sort === "created-asc" ? "selected" : "" %>>Oldest</option>
+            <option value="name-asc" <%= sort === "name-asc" ? "selected" : "" %>>Name A-Z</option>
+            <option value="name-desc" <%= sort === "name-desc" ? "selected" : "" %>>Name Z-A</option>
+            <option value="price-asc" <%= sort === "price-asc" ? "selected" : "" %>>Price Low to High</option>
+            <option value="price-desc" <%= sort === "price-desc" ? "selected" : "" %>>Price High to Low</option>
+          </select>
+        </div>
+
+        <div class="col-md-2 form-check text-light mt-3 d-flex justify-content-end gap-2">
+          <input class="form-check-input" type="checkbox" name="includeDeleted" id="includeDeleted" value="true"
+            <%= includeDeleted ? "checked" : "" %>>
+          <label class="form-check-label" for="includeDeleted">
+            Show Deleted
+          </label>
+        </div>
+
+        <div class="col-md-1 d-grid mt-3">
+          <button class="btn btn-warning" type="submit">Apply</button>
+        </div>
+      </form>
+
+      <!-- Sort/Filter Buttons with Fly-out -->
+      <div class="d-flex justify-content-end mb-3 gap-2">
+        <%- include("partials/sortDropdown") %>
+        <%- include("partials/filters") %>
+
+        <button class="btn btn-success add-btn" data-bs-toggle="modal" data-bs-target="#addModal">
+          <i class="bi bi-plus-circle me-1"></i> Add Product
+        </button>
+      </div>
+
+      <!-- Product Table -->
+      <div class="table-responsive">
+        <table class="table table-dark table-striped admin-products-table">
+          <thead class="table-warning text-dark">
+            <tr>
+              <th>ID</th>
+              <th>Image</th>
+              <th class="text-start">Name</th>
+              <th class="text-start">Description</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th class="text-start">Category</th>
+              <th class="text-start">Brand</th>
+              <th>Created</th>
+              <th>Updated</th>
+              <th>Deleted?</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%- include("partials/adminProductTableRows", { products }) %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <%- include("products/modals") %>
+    <%- include("partials/footer") %>
+
+
+    <script type="module" src="/javascripts/products.js"></script>
+
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+      <i class="bi bi-arrow-up-short"></i>
+      <span class="visually-hidden">Back to top</span>
+    </button>
+
+    <%- include("partials/warningModal") %>
+  </body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head") %>
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("partials/navbar") %>
+
+    <main class="container my-5">
+      <%- include("partials/alerts") %>
+      <h1 class="text-warning mb-4"><i class="bi bi-cart-check"></i> Your Cart</h1>
+
+      <% if (cartItems.length === 0) { %>
+        <div class="alert alert-warning text-center py-5">
+          <h4 class="mb-3"><i class="bi bi-cart-x"></i> Your cart is empty</h4>
+          <p class="mb-4">Looks like you haven’t added anything to your cart yet.</p>
+          <a href="/products" class="btn btn-outline-dark">
+            <i class="bi bi-box-seam"></i> Browse Products
+          </a>
+        </div>
+      <% } else { %>
+        <ul class="list-group cart-list mb-4">
+          <% cartItems.forEach(item => {
+            const unit = item.Product.unitprice;
+            const qty = item.quantity;
+            const total = unit * qty;
+            const discount = discountPercent > 0 ? (total * discountPercent) / 100 : 0;
+            const discountedTotal = total - discount;
+          %>
+            <li class="list-group-item cart-item">
+              <div class="row w-100 align-items-center">
+                <div class="col-12 col-md-3 text-center mb-3 mb-md-0">
+                  <img
+                    src="<%= item.Product.imgurl %>"
+                    alt="<%= item.Product.name %>"
+                    class="img-fluid cart-img" />
+                </div>
+
+                <div class="col-12 col-md-6 cart-details">
+                  <h5 class="cart-title"><%= item.Product.name %></h5>
+                  <p class="cart-meta mb-1">In stock: <%= parseInt(item.Product.quantity) %> pcs</p>
+                  <p class="cart-meta mb-1">Unit Price: <%= unit.toFixed(2) %> NOK</p>
+                  <% if (discountPercent > 0) { %>
+                    <p class="cart-meta mb-1">
+                      <%= membershipName %> Discount (<%= discountPercent %>%): -<%= discount.toFixed(2) %> NOK
+                    </p>
+                    <p class="cart-price mb-0">Your Price: <%= discountedTotal.toFixed(2) %> NOK</p>
+                  <% } else { %>
+                    <p class="cart-price mb-0">Total: <%= total.toFixed(2) %> NOK</p>
+                  <% } %>
+                </div>
+
+                <div class="col-12 col-md-3 d-flex flex-column gap-2 mt-3 mt-md-0 align-items-md-end">
+                  <form
+                    action="/cart/update/<%= item.productId %>"
+                    method="POST"
+                    class="d-flex flex-column align-items-end w-100">
+                    <label for="quantity-<%= item.productId %>" class="form-label w-100 text-light mb-1">Quantity:</label>
+                    <div class="d-flex gap-2 w-100 justify-content-between">
+                      <input
+                        type="number"
+                        name="quantity"
+                        id="quantity-<%= item.productId %>"
+                        class="form-control form-control-sm"
+                        value="<%= qty %>"
+                        min="1"
+                        max="<%= item.Product.quantity %>"
+                        aria-label="Quantity" />
+                      <button type="submit" class="btn btn-sm btn-outline-light">Update</button>
+                    </div>
+                  </form>
+
+                  <form
+                    action="/cart/remove/<%= item.productId %>"
+                    method="POST"
+                    class="cart-remove-form"
+                    data-product-name="<%= item.Product.name %>">
+                    <button class="btn btn-sm btn-danger w-100">Remove</button>
+                  </form>
+                </div>
+              </div>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
+
+      <div class="cart-summary text-light">
+        <% const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0); %>
+        <p><strong>Total items:</strong> <%= totalItems %></p>
+        <p><strong>Total before discount:</strong> <%= totalBeforeDiscount %> NOK</p>
+        <% if (discountPercent > 0) { %>
+          <p>
+            <strong><%= membershipName %> Discount (<%= discountPercent %>%):</strong>
+            -<%= (totalBeforeDiscount - totalAfterDiscount).toFixed(2) %> NOK
+          </p>
+        <% } %>
+        <h4><strong>Total to Pay:</strong> <%= totalAfterDiscount %> NOK</h4>
+      </div>
+
+      <div class="d-flex flex-column flex-md-row gap-3 mt-4 cart-actions justify-content-md-end">
+        <a href="/products" class="btn btn-outline-warning">Continue Shopping</a>
+
+        <% if (cartItems.length > 0) { %>
+          <form action="/cart/checkout" method="POST">
+            <button class="btn btn-success">Checkout</button>
+          </form>
+          <form action="/cart/clear" method="POST" id="clear-cart-form">
+            <button class="btn btn-outline-light">Clear Cart</button>
+          </form>
+        <% } %>
+      </div>
+    </main>
+
+    <%- include("partials/footer") %>
+    <%- include("partials/warningModal") %>
+
+    <script type="module" src="/javascripts/cartConfirm.js"></script>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+      <i class="bi bi-arrow-up-short"></i>
+      <span class="visually-hidden">Back to top</span>
+    </button>
+  </body>
+</html>

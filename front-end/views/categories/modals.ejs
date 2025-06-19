@@ -1,0 +1,58 @@
+<!-- ADD CATEGORY MODAL -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="addCategoryForm" class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCategoryModalLabel">Add Category</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label for="category-add-name" class="form-label">Category Name</label>
+        <input type="text" id="category-add-name" name="name" class="form-control" required>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Add Category</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- EDIT CATEGORY MODAL -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="editCategoryForm" class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-id" name="id">
+        <label for="edit-name" class="form-label">Category Name</label>
+        <input type="text" id="edit-name" name="name" class="form-control" required>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- DELETE CATEGORY MODAL -->
+<div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="deleteCategoryForm" class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteCategoryModalLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete <strong id="delete-category-name">this category</strong>?
+        <input type="hidden" id="delete-id" name="id">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger">Delete Category</button>
+      </div>
+    </form>
+  </div>
+</div>

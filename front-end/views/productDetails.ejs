@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head", { cssFile: "productDetails" }) %>
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("partials/navbar") %>
+
+    <main class="container my-5">
+      <%- include("partials/alerts") %>
+      <div class="product-details-wrapper bg-dark text-light rounded shadow-lg p-4 mt-4">
+        <div class="row align-items-stretch">
+          <!-- Product Image -->
+          <div class="col-md-6 text-center mb-4 mb-md-0">
+            <img
+              src="<%= product.imgurl %>"
+              alt="<%= product.name || 'Product Name' %>"
+              class="product-image rounded shadow" />
+          </div>
+
+          <!-- Product Info and Actions -->
+          <div class="col-md-6 d-flex">
+            <div class="d-flex flex-column justify-content-between w-100">
+              <div>
+                <h1 class="title mb-3"><%= product.name %></h1>
+                <p class="product-description"><%= product.description %></p>
+
+                <ul class="list-unstyled">
+                  <li><strong>Category:</strong> <%= product.category %></li>
+                  <li><strong>Brand:</strong> <%= product.brand %></li>
+                  <li><strong>Available:</strong> <%= product.quantity %> in stock</li>
+                </ul>
+
+                <% const discount = user?.membership?.discount || 0; %> <% const discountedPrice = (product.unitprice * (1 -
+                discount / 100)).toFixed(2); %> <% const membership = user?.membership?.name; %> <% if (user && discount > 0)
+                { %>
+                <p class="fs-5 mt-3">
+                  <strong>Price:</strong>
+                  <s><%= product.unitprice %> NOK</s>
+                  <span class="text-success discount ms-2"><%= discountedPrice %> NOK</span>
+                </p>
+                <span class="badge bg-warning text-dark mb-2 d-inline-block">
+                  <%= membership %> - <%= discount %>% off
+                  <% if (membership === "Gold") { %>🥇<% } %>
+                  <% if (membership === "Silver") { %>🥈<% } %>
+                  <% if (membership === "Bronze") { %>🥉<% } %>
+                  <% if (membership === "Platina") { %>💎<% } %>
+                  <% if (membership === "VIP") { %>👑<% } %>
+                </span>
+
+                <% } else { %>
+                <p class="fs-5 mt-3"><strong>Price:</strong> <%= product.unitprice %> NOK</p>
+                <% } %>
+              </div>
+
+              <div class="mt-4 d-flex flex-column flex-md-row gap-3">
+                <% if (!user) { %>
+                  <button class="btn btn-secondary w-100 w-md-auto" disabled>Log in to add to cart</button>
+                <% } else if (product.quantity === 0) { %>
+                  <button class="btn btn-danger w-100 w-md-auto" disabled>Out of stock</button>
+                <% } else { %>
+                  <div class="d-flex flex-column flex-md-row gap-2 w-100">
+                    <form action="/api/cart" method="POST" class="w-100">
+                      <input type="hidden" name="productId" value="<%= Number(product.id) %>" />
+                      <input type="hidden" name="quantity" value="1" />
+                      <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-cart-plus me-1"></i> Add to Cart
+                      </button>
+                    </form>
+
+                    <% if (user.cartCount > 0) { %>
+                      <a href="/cart" class="btn btn-outline-light w-100">
+                        <i class="bi bi-basket me-1"></i> Go to Cart
+                      </a>
+                    <% } %>
+                  </div>
+                <% } %>
+
+
+                <a href="/products" class="btn btn-outline-light w-100 w-md-auto">← Back to Products</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <%- include("partials/footer") %>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+      <i class="bi bi-arrow-up-short"></i>
+      <span class="visually-hidden">Back to top</span>
+    </button>
+  </body>
+</html>

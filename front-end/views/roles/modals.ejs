@@ -1,0 +1,88 @@
+<!-- ADD ROLE MODAL -->
+<div class="modal fade" id="addRoleModal" tabindex="-1" aria-labelledby="addRoleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="addRoleForm" class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addRoleModalLabel">Add Role</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="add-role-error" class="alert alert-danger d-none"></div>
+
+        <label for="add-name" class="form-label">Role Name</label>
+        <input id="add-name" name="name" type="text" class="form-control mb-2" required />
+
+        <div class="form-check mb-2">
+          <input id="add-isAdmin" name="isAdmin" type="checkbox" class="form-check-input" />
+          <label for="add-isAdmin" class="form-check-label">Has Admin Privileges</label>
+        </div>
+
+        <label for="add-defaultMembershipId" class="form-label">Default Membership</label>
+        <select id="add-defaultMembershipId" name="defaultMembershipId" class="form-select">
+          <option value="">-- None --</option>
+          <% memberships.forEach(m => { %>
+            <option value="<%= m.id %>"><%= m.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Add Role</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- EDIT ROLE MODAL -->
+<div class="modal fade" id="editRoleModal" tabindex="-1" aria-labelledby="editRoleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="editRoleForm" class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editRoleModalLabel">Edit Role</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="edit-role-error" class="alert alert-danger d-none"></div>
+        <input type="hidden" name="id" id="edit-id" />
+
+        <label for="edit-name" class="form-label">Role Name</label>
+        <input id="edit-name" name="name" type="text" class="form-control mb-2" required />
+
+        <div class="form-check mb-2">
+          <input id="edit-isAdmin" name="isAdmin" type="checkbox" class="form-check-input" />
+          <label for="edit-isAdmin" class="form-check-label">Has Admin Privileges</label>
+        </div>
+
+        <label for="edit-defaultMembershipId" class="form-label">Default Membership</label>
+        <select id="edit-defaultMembershipId" name="defaultMembershipId" class="form-select">
+          <option value="">-- None --</option>
+          <% memberships.forEach(m => { %>
+            <option value="<%= m.id %>"><%= m.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- DELETE ROLE MODAL -->
+<div class="modal fade" id="deleteRoleModal" tabindex="-1" aria-labelledby="deleteRoleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light border-warning">
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title" id="deleteRoleModalLabel">Warning</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete the role <strong id="roleToDeleteName"></strong>?</p>
+        <p class="small">This action cannot be undone and only works if no users are assigned to this role.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="confirmDeleteRole" type="button" class="btn btn-warning">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

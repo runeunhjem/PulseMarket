@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head") %>
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("../partials/navbar") %>
+    <%- include("../partials/alerts") %>
+
+    <div class="container mt-5">
+      <div class="form-container">
+        <h1 class="text-center text-warning mb-4"><i class="bi bi-person-plus"></i> Create Account</h1>
+
+        <% if (typeof error !== "undefined") { %>
+          <div class="alert alert-danger text-center"><%= error %></div>
+        <% } %>
+
+        <% const formValues = typeof formData !== "undefined" ? formData : {}; %>
+
+        <form action="/auth/signup" method="POST" aria-label="Signup Form">
+          <div class="mb-3">
+            <label for="firstname" class="form-label">First Name</label>
+            <input
+              type="text"
+              id="firstname"
+              name="firstname"
+              class="form-control"
+              required
+              autocomplete="given-name"
+              placeholder="Enter your first name"
+              aria-label="First Name"
+              value="<%= formValues.firstname || '' %>"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="lastname" class="form-label">Last Name</label>
+            <input
+              type="text"
+              id="lastname"
+              name="lastname"
+              class="form-control"
+              required
+              autocomplete="family-name"
+              placeholder="Enter your last name"
+              aria-label="Last Name"
+              value="<%= formValues.lastname || '' %>"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-control"
+              required
+              autocomplete="username"
+              placeholder="Letters, numbers, dots, underscores and hyphens only"
+              aria-label="Username"
+              value="<%= formValues.username || '' %>"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              required
+              autocomplete="email"
+              placeholder="Enter your email"
+              aria-label="Email"
+              value="<%= formValues.email || '' %>"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              required
+              autocomplete="new-password"
+              placeholder="Min 8 characters, 1 uppercase, 1 number"
+              aria-label="Password"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              class="form-control"
+              required
+              autocomplete="street-address"
+              placeholder="Enter your address"
+              aria-label="Address"
+              value="<%= formValues.address || '' %>"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="form-control"
+              required
+              autocomplete="tel"
+              placeholder="Enter your phone number"
+              aria-label="Phone"
+              value="<%= formValues.phone || '' %>"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100" aria-label="Submit signup form">Sign Up</button>
+        </form>
+
+        <p class="text-center mt-3">
+          Already have an account? <a href="/auth/login" class="text-warning brand-link">Login here</a>.
+        </p>
+      </div>
+    </div>
+
+    <%- include("../partials/footer") %>
+
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+      <i class="bi bi-arrow-up-short"></i>
+      <span class="visually-hidden">Back to top</span>
+    </button>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head", { title: "Manage Orders", cssFile: "adminOrders" }) %>
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("partials/navbar") %>
+    <%- include("partials/alerts") %>
+    <%- include("partials/warningModal") %>
+
+    <main class="container my-5">
+      <h1 class="text-warning mb-4"><i class="bi bi-receipt-cutoff"></i> Manage Orders</h1>
+
+      <%- include("partials/adminOrderSearch") %>
+
+      <% if (orders.length === 0) { %>
+        <div class="alert alert-info">No orders found.</div>
+      <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-dark table-striped admin-orders-table align-middle">
+            <thead class="table-warning text-dark">
+              <tr>
+                <th>ID</th>
+                <th>Order #</th>
+                <th>User</th>
+                <th>Email</th>
+                <th>Membership</th>
+                <th>Created</th>
+                <th>Status</th>
+                <th>Total (Paid)</th>
+                <th>Total (Original)</th>
+                <th>Items</th>
+                <th>Update Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% orders.forEach(order => { %>
+                <tr data-search="
+                  <%= order.id %>
+                  <%= order.orderNumber %>
+                  <%= order.user?.username %>
+                  <%= order.user?.email %>
+                  <%= order.membershipName %>
+                  <%= new Date(order.createdAt).toLocaleDateString() %>
+                  <%= order.status %>
+                  <%= order.totalPaid?.toFixed(2) %>
+                  <%= order.totalOriginal?.toFixed(2) %>
+                  <%= order.items?.reduce((sum, item) => sum + item.quantity, 0) || 0 %> item(s)
+                ">
+                  <td><%= order.id %></td>
+                  <td><%= order.orderNumber %></td>
+                  <td>
+                    <strong><%= order.userSnapshotName || "Deleted user" %></strong><br>
+                  </td>
+                  <td>
+                    <small><%= order.userSnapshotEmail || "N/A" %></small>
+                  </td>
+
+                  <td><%= order.membershipName %></td>
+                  <td><%= new Date(order.createdAt).toLocaleDateString() %></td>
+                  <td><%= order.status %></td>
+                  <td><%= order.totalPaid?.toFixed(2) %> NOK</td>
+                  <td><%= order.totalOriginal?.toFixed(2) %> NOK</td>
+                  <td><%= order.items?.reduce((sum, item) => sum + item.quantity, 0) || 0 %> item(s)</td>
+
+                  <td>
+                    <form class="status-form" data-order-id="<%= order.id %>">
+                      <div class="input-group">
+                        <select class="form-select form-select-sm" name="status">
+                          <% ["In Progress", "Ordered", "Completed"].forEach(opt => { %>
+                            <option value="<%= opt %>" <%= opt === order.status ? "selected" : "" %>>
+                              <%= opt %>
+                            </option>
+                          <% }) %>
+                        </select>
+                        <button class="btn btn-sm btn-outline-light" type="submit">Update</button>
+                      </div>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </main>
+
+    <%- include("partials/footer") %>
+    <script src="/javascripts/adminOrders.js" type="module"></script>
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+      <i class="bi bi-arrow-up-short"></i>
+      <span class="visually-hidden">Back to top</span>
+    </button>
+  </body>
+</html>

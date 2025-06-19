@@ -1,0 +1,59 @@
+<% products.forEach(product => { %>
+  <tr class="<%= product.isDeleted ? 'table-secondary' : '' %>"
+      data-id="<%= product.id %>"
+      data-name="<%= product.name %>"
+      data-raw='<%- JSON.stringify(product) %>'>
+    <td><%= product.id %></td>
+    <td>
+      <a href="/products/<%= product.id %>" class="text-decoration-none">
+        <img
+          src="<%= product.imgurl || '/img/placeholder.png' %>"
+          alt="Image for <%= product.name %>"
+          class="admin-product-image" />
+      </a>
+    </td>
+
+    <td class="text-start" title="<%= product.name %>">
+      <a href="/products/<%= product.id %>" class="text-decoration-none text-reset">
+        <%= product.name.length > 20 ? product.name.slice(0, 20) + "…" : product.name %>
+      </a>
+    </td>
+    <td class="text-start" title="<%= product.description %>"><%= product.description?.length > 20 ? product.description.slice(0, 20) + "…" : product.description %></td>
+    <td><%= product.unitprice.toFixed(2) %></td>
+    <td><%= product.quantity %></td>
+    <td class="text-start" title="<%= product.category %>"><%= product.category %></td>
+    <td class="text-start" title="<%= product.brand %>"><%= product.brand %></td>
+    <td><%= new Date(product.createdAt).toLocaleDateString() %></td>
+    <td><%= product.updatedAt ? new Date(product.updatedAt).toLocaleDateString() : "No update" %></td>
+    <td>
+      <div class="form-check form-switch d-inline-flex align-items-center gap-1 justify-content-center">
+        <input
+        class="form-check-input admin-delete-toggle"
+        type="checkbox"
+        id="toggle-<%= product.id %>"
+        role="switch"
+        data-id="<%= product.id %>" <%= product.isDeleted ? "checked" : "" %>
+        aria-label="Toggle deleted status">
+        <label class="admin-delete-label ms-1" for="toggle-<%= product.id %>"><%= product.isDeleted ? "Yes" : "No" %></label>
+      </div>
+    </td>
+    <td class="admin-actions" style="height: 80px !important;">
+      <% if (!product.isDeleted) { %>
+        <button class="btn btn-sm btn-danger" title="Delete product"
+                data-id="<%= product.id %>" data-name="<%= product.name %>"
+                data-bs-toggle="modal" data-bs-target="#deleteModal">
+          <i class="bi bi-trash"></i>
+        </button>
+      <% } else { %>
+        <button class="btn btn-sm btn-success" title="Restore product"
+                data-id="<%= product.id %>" data-name="<%= product.name %>"
+                data-bs-toggle="modal" data-bs-target="#restoreModal">
+          <i class="bi bi-arrow-clockwise"></i>
+        </button>
+      <% } %>
+      <button class="btn btn-sm btn-primary" title="Edit product" data-bs-toggle="modal" data-bs-target="#editModal" data-product='<%- JSON.stringify(product) %>'>
+        <i class="bi bi-pencil-square"></i>
+      </button>
+    </td>
+  </tr>
+<% }) %>

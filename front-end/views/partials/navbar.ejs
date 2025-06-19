@@ -1,0 +1,111 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand text-wrap" href="/"> ⚡ PulseMarket<% if (user?.roleId === 1) { %> Admin<% } %> </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse flex-column align-items-end" id="navbarNav">
+      <% if (user) { %>
+        <div class="text-end w-100 pe-2 mb-2 small text-light d-flex justify-content-end align-items-center gap-3">
+          <span class="text-warning">
+            Hi <strong><%= user.username %></strong> - <%= user.membership?.name %> Member
+            <% if (user.membership?.name === "Gold") { %>🥇<% } %>
+            <% if (user.membership?.name === "Silver") { %>🥈<% } %>
+            <% if (user.membership?.name === "Bronze") { %>🥉<% } %>
+            <% if (user.membership?.name === "Platina") { %>💎<% } %>
+            <% if (user.membership?.name === "VIP") { %>👑<% } %>
+            - Role: <%= user.role?.name || "User" %>
+          </span>
+          <a href="/cart" class="nav-link p-0 position-relative text-warning" title="View Cart">
+            <i class="bi bi-cart fs-5"></i>
+            <% if (user.cartCount > 0) { %>
+              <span class="badge rounded-pill bg-warning text-dark small cart-badge">
+                <%= user.cartCount %>
+              </span>
+            <% } %>
+          </a>
+        </div>
+      <% } %>
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link <%= requestPath === '/' ? 'active fw-bold text-warning' : '' %>" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link <%= requestPath.startsWith('/products') ? 'active fw-bold text-warning' : '' %>" href="/products">Products</a>
+        </li>
+
+        <% if (user) { %>
+          <li class="nav-item">
+            <a class="nav-link <%= requestPath.startsWith('/orders') ? 'active fw-bold text-warning' : '' %>" href="/orders">Orders</a>
+          </li>
+        <% } %>
+
+        <% if (typeof filters !== "undefined" && filters.categories?.length) { %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle <%= requestPath.includes('/category') ? 'active fw-bold text-warning' : '' %>" href="#" role="button" data-bs-toggle="dropdown">Categories</a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <% filters.categories.forEach(cat => { %>
+                <li>
+                  <a class="dropdown-item" href="/products?category=<%= encodeURIComponent(cat.name) %>"><%= cat.name %></a>
+                </li>
+              <% }) %>
+            </ul>
+          </li>
+        <% } %>
+
+        <% if (typeof filters !== "undefined" && filters.brands?.length) { %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle <%= requestPath.includes('/brand') ? 'active fw-bold text-warning' : '' %>" href="#" role="button" data-bs-toggle="dropdown">Brands</a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <% filters.brands.forEach(brand => { %>
+                <li>
+                  <a class="dropdown-item" href="/products?brand=<%= encodeURIComponent(brand.name) %>"><%= brand.name %></a>
+                </li>
+              <% }) %>
+            </ul>
+          </li>
+        <% } %>
+
+        <% if (user) { %>
+          <% if (user.roleId === 1) { %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle <%= requestPath.startsWith('/dashboard') ? 'active fw-bold text-warning' : '' %>" href="#" data-bs-toggle="dropdown">Admin Panel</a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+                <hr class="dropdown-divider navbar-hr">
+                <li><a class="dropdown-item" href="/products">Products</a></li>
+                <li><a class="dropdown-item" href="/admin/categories">Categories</a></li>
+                <li><a class="dropdown-item" href="/admin/brands">Brands</a></li>
+                <li><a class="dropdown-item" href="/admin/orders">Orders</a></li>
+                <li><a class="dropdown-item" href="/admin/users">Users</a></li>
+                <li><a class="dropdown-item" href="/admin/memberships">Memberships</a></li>
+                <li><a class="dropdown-item" href="/admin/roles">Roles</a></li>
+                <hr class="dropdown-divider navbar-hr">
+                <li><a class="dropdown-item navbar-hr" href="http://localhost:3000/doc" target="_blank">Swagger Documentation</a></li>
+              </ul>
+
+            </li>
+          <% } %>
+          <li class="nav-item">
+            <a class="nav-link text-danger" href="/auth/logout">Logout</a>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link <%= requestPath.startsWith('/auth/login') ? 'active fw-bold text-warning' : '' %>" href="/auth/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link <%= requestPath.startsWith('/auth/signup') ? 'active fw-bold text-warning' : '' %>" href="/auth/signup">Register</a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

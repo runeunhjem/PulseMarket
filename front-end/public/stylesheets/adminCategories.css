@@ -1,0 +1,9 @@
+.add-btn {
+  width: 160px;
+  height: 40px;
+}
+
+td {
+  white-space: nowrap;
+  overflow: hidden;
+}

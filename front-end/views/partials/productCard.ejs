@@ -1,0 +1,83 @@
+<div class="card h-100 <%= product.isDeleted ? 'bg-secondary text-light' : 'bg-dark text-white' %> shadow border-light">
+  <a href="/products/<%= product.id %>" class="text-decoration-none text-reset h-100 d-flex flex-column">
+    <img
+      src="<%= product.imgurl || 'https://via.placeholder.com/300x200' %>"
+      class="card-img-top border-bottom pb-3 px-3"
+      alt="<%= product.name || 'Product image' %>" />
+
+    <div class="card-body d-flex flex-column h-100">
+      <h5 class="card-title fs-6 mb-2"><%= product.name %></h5>
+      <p class="small mb-3"><%= product.description || 'No description available.' %></p>
+
+      <div class="mt-auto">
+        <p class="mb-1 small"><strong>Category:</strong> <%= product.category %></p>
+        <p class="mb-1 small"><strong>Brand:</strong> <%= product.brand %></p>
+
+        <%
+          const discountPercent = user?.membership?.discount || 0;
+          const hasDiscount = discountPercent > 0;
+          const discountedPrice = (product.unitprice * (1 - discountPercent / 100)).toFixed(2);
+          const membershipName = user?.membership?.name;
+        %>
+
+        <% if (hasDiscount) { %>
+          <p class="mb-1 small">
+            <strong>Price:</strong>
+            <s><%= product.unitprice %> NOK</s>
+            <span class="text-success ms-2"><%= discountedPrice %> NOK</span>
+          </p>
+          <span class="badge text-dark mb-2">
+            <%= membershipName %> - <%= discountPercent %>% off
+            <% if (membershipName === "Gold") { %>🥇<% } %>
+            <% if (membershipName === "Silver") { %>🥈<% } %>
+            <% if (membershipName === "Bronze") { %>🥉<% } %>
+            <% if (membershipName === "Platina") { %>💎<% } %>
+            <% if (membershipName === "VIP") { %>👑<% } %>
+          </span>
+        <% } else { %>
+          <p class="mb-2 small"><strong>Price:</strong> <%= product.unitprice %> NOK</p>
+        <% } %>
+      </div>
+    </div>
+  </a>
+
+  <%
+    const cartItemForThisProduct = user?.cart?.find(item => item.productId === product.id);
+    const quantityInCart = cartItemForThisProduct?.quantity || 0;
+    const isOutOfStock = quantityInCart >= product.quantity;
+  %>
+
+  <div class="card-footer bg-transparent border-top mt-auto p-3">
+    <% if (product.isDeleted) { %>
+      <span class="badge bg-danger w-100">Deleted</span>
+
+    <% } else if (user) { %>
+      <% if (isOutOfStock) { %>
+        <button class="btn btn-outline-light btn-sm w-100" disabled>
+          <i class="bi bi-x-circle"></i> Out of stock
+        </button>
+      <% } else { %>
+        <div class="d-flex flex-column flex-md-row gap-2">
+          <form method="POST" action="/api/cart" class="w-100">
+            <input type="hidden" name="productId" value="<%= product.id %>" />
+            <input type="hidden" name="quantity" value="1" />
+            <button class="btn btn-light btn-sm w-100">
+              <i class="bi bi-cart-plus me-1"></i> Add to Cart
+            </button>
+          </form>
+
+          <% if (user.cartCount > 0) { %>
+            <a href="/cart" class="btn btn-outline-light btn-sm w-100">
+              <i class="bi bi-basket me-1"></i> Go to Cart
+            </a>
+          <% } %>
+        </div>
+      <% } %>
+
+    <% } else { %>
+      <button class="btn btn-outline-light btn-sm w-100" disabled>
+        <i class="bi bi-lock"></i> Log in to buy
+      </button>
+    <% } %>
+  </div>
+</div>

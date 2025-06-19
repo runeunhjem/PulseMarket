@@ -1,0 +1,27 @@
+.brand-link {
+  position: relative;
+  color: #ffc107;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* Underline effect using a pseudo-element */
+.brand-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background-color: #ffc107;
+  transition: width 0.3s ease-in-out;
+}
+
+.brand-link:hover {
+  color: #e0a800;
+}
+
+.brand-link:hover::after {
+  width: 100%;
+}

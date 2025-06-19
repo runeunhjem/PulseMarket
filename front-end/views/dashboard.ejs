@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head", { title: "Admin Dashboard", cssFile: "dashboard" }) %>
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("partials/navbar") %>
+
+    <main class="container my-5">
+      <h1 class="text-warning mb-4"><i class="bi bi-speedometer2"></i> Admin Dashboard</h1>
+
+      <div class="row g-4">
+        <!-- Products -->
+        <div class="col-md-4">
+          <div class="card text-bg-dark h-100 shadow border-light card-products">
+            <div class="card-body d-flex flex-column text-center">
+              <i class="bi bi-box-seam fs-1"></i>
+              <h5 class="card-title mt-3">
+                Products <span class="badge"><%= stats.products %></span>
+                <% if (stats.deletedProducts > 0) { %>
+                  <small class="d-block pt-1">( + <%= stats.deletedProducts %> deleted )</small>
+                <% } %>
+              </h5>
+              <p class="card-text">Manage, add, edit or remove products.</p>
+              <a href="/products" class="btn w-100 mt-auto">Manage Products</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="col-md-4">
+          <div class="card text-bg-dark h-100 shadow border-light card-categories">
+            <div class="card-body d-flex flex-column text-center">
+              <i class="bi bi-tags fs-1"></i>
+              <h5 class="card-title mt-3">
+                Categories <span class="badge"><%= stats.categories %></span>
+                <% if (stats.inactiveCategories > 0) { %>
+                  <small class="d-block pt-1">( + <%= stats.inactiveCategories %> inactive )</small>
+                <% } %>
+              </h5>
+              <p class="card-text">Organize product categories.</p>
+              <a href="/admin/categories" class="btn w-100 mt-auto">Manage Categories</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Brands -->
+        <div class="col-md-4">
+          <div class="card text-bg-dark h-100 shadow border-light card-brands">
+            <div class="card-body d-flex flex-column text-center">
+              <i class="bi bi-bag-check fs-1"></i>
+              <h5 class="card-title mt-3">
+                Brands <span class="badge"><%= stats.brands %></span>
+                <% if (stats.inactiveBrands > 0) { %>
+                  <small class="d-block pt-1">( + <%= stats.inactiveBrands %> inactive )</small>
+                <% } %>
+              </h5>
+              <p class="card-text">Add or update brand info.</p>
+              <a href="/admin/brands" class="btn w-100 mt-auto">Manage Brands</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Users -->
+        <div class="col-md-4">
+          <div class="card text-bg-dark h-100 shadow border-light card-users">
+            <div class="card-body d-flex flex-column text-center">
+              <i class="bi bi-people fs-1"></i>
+              <h5 class="card-title mt-3">
+                Users <span class="badge"><%= stats.users %></span>
+                <% if (stats.deactivatedUsers > 0) { %>
+                  <small class="d-block pt-1">( + <%= stats.deactivatedUsers %> deactivated )</small>
+                <% } %>
+              </h5>
+              <p class="card-text">View and manage user accounts.</p>
+              <a href="/admin/users" class="btn w-100 mt-auto">Manage Users</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders -->
+        <div class="col-md-4">
+          <div class="card text-bg-dark h-100 shadow border-light card-orders">
+            <div class="card-body d-flex flex-column text-center">
+              <i class="bi bi-receipt fs-1"></i>
+              <h5 class="card-title mt-3">Orders <span class="badge"><%= stats.orders %></span></h5>
+              <p class="card-text">Track and update orders.</p>
+              <a href="/admin/orders" class="btn w-100 mt-auto">Manage Orders</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Memberships -->
+        <div class="col-md-4">
+          <div class="card text-bg-dark h-100 shadow border-light card-memberships">
+            <div class="card-body d-flex flex-column text-center">
+              <i class="bi bi-gem fs-1"></i>
+              <h5 class="card-title mt-3">
+                Memberships <span class="badge"><%= stats.memberships %></span>
+              </h5>
+              <p class="card-text">Edit discount levels and rules.</p>
+              <a href="/admin/memberships" class="btn w-100 mt-auto">Manage Memberships</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Roles -->
+        <div class="col-md-4">
+          <div class="card text-bg-dark h-100 shadow border-light card-roles">
+            <div class="card-body d-flex flex-column text-center">
+              <i class="bi bi-person-badge fs-1"></i>
+              <h5 class="card-title mt-3">
+                Roles <span class="badge"><%= stats.roles %></span>
+              </h5>
+              <p class="card-text">Define access and default privileges.</p>
+              <a href="/admin/roles" class="btn w-100 mt-auto">Manage Roles</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <%- include("partials/footer") %>
+
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+      <i class="bi bi-arrow-up-short"></i>
+      <span class="visually-hidden">Back to top</span>
+    </button>
+  </body>
+</html>

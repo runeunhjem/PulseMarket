@@ -1,0 +1,39 @@
+.add-btn {
+  width: 160px;
+  height: 40px;
+}
+
+td {
+  white-space: nowrap;
+}
+
+.status-form {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.status-form .form-select,
+.status-form .btn {
+  flex-shrink: 0;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.table-responsive {
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.input-group {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-select {
+  min-width: 120px !important;
+}

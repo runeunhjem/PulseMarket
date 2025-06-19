@@ -1,0 +1,144 @@
+<!-- ADD PRODUCT MODAL -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form method="post" id="addProductForm" class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Add Product</h5>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close Add Product Modal" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body row g-3">
+        <div class="col-md-6">
+          <label for="add-name" class="form-label">Name</label>
+          <input name="name" id="add-name" type="text" class="form-control" aria-label="Product name" required>
+        </div>
+        <div class="col-md-6">
+          <label for="add-imgurl" class="form-label">Image URL</label>
+          <input name="imgurl" id="add-imgurl" type="url" class="form-control" aria-label="Product image URL" required>
+        </div>
+        <div class="col-12">
+          <label for="add-description" class="form-label">Description</label>
+          <textarea name="description" id="add-description" class="form-control" rows="2" aria-label="Product description" required></textarea>
+        </div>
+        <div class="col-md-4">
+          <label for="add-unitprice" class="form-label">Price</label>
+          <input name="unitprice" id="add-unitprice" type="number" step="1" class="form-control" aria-label="Product price" min="1" required>
+        </div>
+        <div class="col-md-4">
+          <label for="add-quantity" class="form-label">Quantity</label>
+          <input name="quantity" id="add-quantity" type="number" class="form-control" aria-label="Product quantity" min="1" required>
+        </div>
+        <div class="col-md-4">
+          <label for="add-categoryId" class="form-label">Category</label>
+          <select name="CategoryId" id="add-categoryId" class="form-select" aria-label="Select Category" required>
+            <option value="" disabled selected>Select category</option>
+            <% filters.categories.forEach(cat => { %>
+              <option value="<%= cat.id %>"><%= cat.name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="add-brandId" class="form-label">Brand</label>
+          <select name="BrandId" id="add-brandId" class="form-select" aria-label="Select Brand" required>
+            <option value="" disabled selected>Select brand</option>
+            <% filters.brands.forEach(brand => { %>
+              <option value="<%= brand.id %>"><%= brand.name %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" aria-label="Add Product">Add</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- EDIT PRODUCT MODAL -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form method="post" id="editProductForm" class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Product</h5>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close Edit Product Modal" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body row g-3">
+        <input type="hidden" name="id" id="edit-id">
+        <div class="col-md-6">
+          <label for="edit-name" class="form-label">Name</label>
+          <input name="name" type="text" id="edit-name" class="form-control" aria-label="Product name" required>
+        </div>
+        <div class="col-md-6">
+          <label for="edit-imgurl" class="form-label">Image URL</label>
+          <input name="imgurl" type="url" id="edit-imgurl" class="form-control" aria-label="Product image URL" required>
+        </div>
+        <div class="col-12">
+          <label for="edit-description" class="form-label">Description</label>
+          <textarea name="description" id="edit-description" class="form-control" rows="2" aria-label="Product description" required></textarea>
+        </div>
+        <div class="col-md-4">
+          <label for="edit-unitprice" class="form-label">Price</label>
+          <input name="unitprice" type="number" step="1" id="edit-unitprice" class="form-control" aria-label="Product price" min="1" required>
+        </div>
+        <div class="col-md-4">
+          <label for="edit-quantity" class="form-label">Quantity</label>
+          <input name="quantity" type="number" id="edit-quantity" class="form-control" aria-label="Product quantity" min="1" required>
+        </div>
+        <div class="col-md-4">
+          <label for="edit-categoryId" class="form-label">Category</label>
+          <select name="CategoryId" id="edit-categoryId" class="form-select" aria-label="Select Category" required>
+            <% filters.categories.forEach(cat => { %>
+              <option value="<%= cat.id %>"><%= cat.name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="edit-brandId" class="form-label">Brand</label>
+          <select name="BrandId" id="edit-brandId" class="form-select" aria-label="Select Brand" required>
+            <% filters.brands.forEach(brand => { %>
+              <option value="<%= brand.id %>"><%= brand.name %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" aria-label="Save changes">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="post" class="modal-content bg-dark text-light" id="deleteProductForm">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close Delete Modal" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete <strong id="delete-product-name">this product</strong>?
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger" aria-label="Delete product">Delete</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- RESTORE CONFIRM MODAL -->
+<div class="modal fade" id="restoreModal" tabindex="-1" aria-labelledby="restoreModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="post" class="modal-content bg-dark text-light" id="restoreProductForm">
+      <div class="modal-header">
+        <h5 class="modal-title" id="restoreModalLabel">Restore Product</h5>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close Restore Modal" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Do you want to restore <strong id="restore-product-name">this product</strong>?
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" aria-label="Restore product">Restore</button>
+      </div>
+    </form>
+  </div>
+</div>

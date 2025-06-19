@@ -1,0 +1,26 @@
+<!-- Search Form -->
+<div class="container my-5 px-0 px-sm-1">
+  <form id="search-form" method="GET" action="/search" class="row g-3 align-items-end justify-content-center">
+    <div class="col-12 col-md-4">
+      <label for="search-name" class="form-label text-light">Product Name</label>
+      <input type="text" id="search-name" name="name" class="form-control" placeholder="e.g. Ipad 16gb" />
+    </div>
+    <div class="col-6 col-md-3">
+      <label for="category-select" class="form-label text-light">Category</label>
+      <select id="category-select" name="category" class="form-select">
+        <option value="">All Categories</option>
+      </select>
+    </div>
+    <div class="col-6 col-md-3">
+      <label for="brand-select" class="form-label text-light">Brand</label>
+      <select id="brand-select" name="brand" class="form-select">
+        <option value="">All Brands</option>
+      </select>
+    </div>
+    <div class="col-12 col-md-2 d-flex gap-2">
+      <button type="submit" class="btn btn-primary w-100">Search</button>
+      <a href="/products" class="btn btn-secondary w-100">Reset</a>
+      <input type="hidden" name="sort" id="sort-input" value="<%= typeof sort !== 'undefined' ? sort : '' %>">
+    </div>
+  </form>
+</div>

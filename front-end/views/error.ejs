@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head") %>
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("partials/navbar") %>
+
+    <div class="container text-center mt-5">
+      <div class="error-box p-4">
+        <h1 class="error-title">Oops! Something went wrong</h1>
+
+        <h2 class="error-code"><%= error?.status || 500 %> — <%= error?.message || "Unexpected Error" %></h2>
+
+        <% if (error.stack && process.env.NODE_ENV === "development") { %>
+        <pre class="text-start mt-3 text-light small"><%= error.stack %></pre>
+        <% } else { %>
+        <p class="error-description mt-3">
+          We're sorry, but the page you're looking for couldn't be found or an unexpected error occurred.
+        </p>
+        <% } %>
+
+        <div class="d-flex justify-content-center gap-3 mt-4">
+          <a href="/" class="btn btn-primary"> <i class="bi bi-house-door-fill"></i> Back to Home </a>
+          <button class="btn btn-secondary" onclick="history.back()"><i class="bi bi-arrow-left"></i> Go Back</button>
+        </div>
+      </div>
+    </div>
+
+    <%- include("partials/footer") %>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+      <i class="bi bi-arrow-up-short"></i>
+      <span class="visually-hidden">Back to top</span>
+    </button>
+  </body>
+</html>

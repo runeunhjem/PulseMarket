@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head") %>
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("partials/navbar") %>
+
+    <main class="container my-5">
+      <%- include("partials/alerts") %>
+
+      <div class="row align-items-center mb-4 text-light">
+        <div class="col-md-6">
+          <h1 class="mb-0 text-warning"><i class="bi bi-journal-text"></i> Your Orders</h1>
+        </div>
+
+        <% if (user && typeof totalQuantityPurchased !== "undefined" && Array.isArray(memberships)) {
+          const currentLevel = memberships.find(m => m.name === user.membership?.name);
+          const sortedLevels = memberships
+            .filter(m => m.minQty !== null)
+            .sort((a, b) => a.minQty - b.minQty);
+
+          const maxQty = sortedLevels.at(-1)?.minQty || 30;
+          const totalProgress = Math.min(100, (totalQuantityPurchased / maxQty) * 100);
+
+          const currentIdx = sortedLevels.findIndex(m => m.name === currentLevel?.name);
+          const nextLevel = sortedLevels[currentIdx + 1];
+          const remaining = nextLevel ? Math.max(0, nextLevel.minQty - totalQuantityPurchased) : 0;
+
+          const levelColor =
+            currentLevel.name === "Platina"
+              ? "bg-info"
+              : currentLevel.name === "Gold"
+              ? "bg-warning"
+              : currentLevel.name === "Silver"
+              ? "bg-secondary"
+              : "bg-brown";
+        %>
+
+        <div class="col-md-6 text-md-end">
+          <div><strong>Membership:</strong> <%= currentLevel.name %> (<%= currentLevel.discount %>% off)</div>
+          <div><strong>Total Items:</strong> <%= totalQuantityPurchased %></div>
+          <% if (nextLevel) { %>
+            <div class="small"><%= remaining %> more to reach <strong><%= nextLevel.name %></strong></div>
+          <% } else { %>
+            <div class="small text-warning">You've reached the highest level 🏆</div>
+          <% } %>
+
+          <!-- Progress bar -->
+          <div class="position-relative mt-3" style="height: 10px;">
+            <div class="progress" style="height: 10px;">
+              <div class="progress-bar <%= levelColor %>" style="width: <%= totalProgress %>%;" role="progressbar"></div>
+            </div>
+            <!-- Current indicator -->
+            <div class="position-absolute translate-middle-y" style="left: <%= totalProgress %>%; top: -8px;">
+              <i class="bi bi-caret-down-fill text-danger"></i>
+            </div>
+          </div>
+
+          <!-- Tick labels -->
+          <div class="d-flex justify-content-between mt-1 small text-white">
+            <% sortedLevels.forEach(level => { %>
+              <span><%= level.name %> <%= level.minQty %>+</span>
+            <% }) %>
+          </div>
+
+        </div>
+        <% } %>
+      </div>
+
+      <% if (!orders.length) { %>
+        <div class="alert alert-info">You haven't placed any orders yet.</div>
+      <% } else { %>
+        <% orders.forEach(order => {
+          const totalBeforeDiscount = order.OrderItems.reduce((acc, item) => acc + item.unitprice * item.quantity, 0);
+          const totalAfterDiscount = totalBeforeDiscount * (1 - order.discountUsed / 100);
+        %>
+          <div class="card mb-4 bg-dark text-light shadow">
+            <div class="card-body">
+              <div class="row justify-content-between">
+                <div class="col-md-6">
+                  <h5 class="card-title mb-1">Order #: <%= order.orderNumber %> - <%= order.status %></h5>
+                  <p class="mb-1"><strong>Placed:</strong> <%= new Date(order.createdAt).toLocaleString("no-NO") %></p>
+                  <p class="mb-1"><strong>Membership Used:</strong> <%= order.membershipName %> (<%= order.discountUsed %>% off)</p>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                  <p class="mb-1"><strong>Total before discount:</strong> <%= totalBeforeDiscount.toFixed(2) %> NOK</p>
+                  <p class="mb-1 text-success"><strong>Total paid:</strong> <%= totalAfterDiscount.toFixed(2) %> NOK</p>
+                </div>
+              </div>
+              <ul class="list-group mt-3">
+                <% order.OrderItems.forEach(item => { %>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="text-start"><strong><%= item.productName %></strong> (x<%= item.quantity %>)</span>
+                    <span class="text-end ms-auto"><%= item.total.toFixed(2) %> NOK</span>
+                  </li>
+                <% }) %>
+              </ul>
+            </div>
+          </div>
+        <% }) %>
+      <% } %>
+    </main>
+
+    <%- include("partials/footer") %>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+      <i class="bi bi-arrow-up-short"></i>
+      <span class="visually-hidden">Back to top</span>
+    </button>
+  </body>
+</html>

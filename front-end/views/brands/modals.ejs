@@ -1,0 +1,58 @@
+<!-- ADD BRAND MODAL -->
+<div class="modal fade" id="addBrandModal" tabindex="-1" aria-labelledby="addBrandModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="addBrandForm" class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addBrandModalLabel">Add Brand</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label for="brand-add-name" class="form-label">Brand Name</label>
+        <input type="text" id="brand-add-name" name="name" class="form-control" required>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Add Brand</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- EDIT BRAND MODAL -->
+<div class="modal fade" id="editBrandModal" tabindex="-1" aria-labelledby="editBrandModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="editBrandForm" class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editBrandModalLabel">Edit Brand</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-id" name="id">
+        <label for="edit-name" class="form-label">Brand Name</label>
+        <input type="text" id="edit-name" name="name" class="form-control" required>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- DELETE BRAND MODAL -->
+<div class="modal fade" id="deleteBrandModal" tabindex="-1" aria-labelledby="deleteBrandModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="deleteBrandForm" class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteBrandModalLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete <strong id="delete-brand-name">this brand</strong>?
+        <input type="hidden" id="delete-id" name="id">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger">Delete Brand</button>
+      </div>
+    </form>
+  </div>
+</div>

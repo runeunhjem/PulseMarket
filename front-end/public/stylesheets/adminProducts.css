@@ -1,0 +1,90 @@
+/* Filter Panel */
+.filter-panel {
+  position: fixed;
+  top: 0;
+  right: -350px;
+  width: 300px;
+  height: 100%;
+  background-color: #1e1e1e;
+  z-index: 1050;
+  padding: 80px 20px 20px;
+  transition: right 0.3s ease-in-out;
+  border-left: 2px solid #444;
+  overflow-y: auto;
+}
+
+.filter-panel.open {
+  right: 0;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1049;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.admin-products-table {
+  white-space: nowrap;
+}
+
+.admin-products-table th,
+.admin-products-table td {
+  vertical-align: middle;
+  height: 70px;
+  padding: 0.5rem;
+}
+
+.admin-products-table td.text-start {
+  text-align: left;
+}
+
+.admin-product-image {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.admin-products-table .form-switch {
+  padding-left: 2.2em;
+}
+
+.admin-products-table .form-switch input[type="checkbox"] {
+  pointer-events: none;
+}
+
+.admin-products-table tr.table-secondary {
+  background-color: #3c3c3c !important;
+}
+
+.admin-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  height: 100%;
+  width: 100%;
+  /* background-color: transparent; */
+}
+
+.admin-delete-label {
+  /* color: #dc3545; */
+  cursor: pointer;
+}
+
+.add-btn {
+  width: 160px;
+  height: 40px;
+}
