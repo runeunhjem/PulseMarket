@@ -11,5 +11,21 @@
       "src": "/(.*)",
       "dest": "app.js"
     }
+  ],
+  "static": {
+    "public": true,
+    "cleanUrls": true,
+    "trailingSlash": false
+  },
+  "headers": [
+    {
+      "source": "/javascripts/(.*).js",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript"
+        }
+      ]
+    }
   ]
 }
