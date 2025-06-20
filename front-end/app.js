@@ -24,6 +24,8 @@ const adminOrdersRoutes = require("./routes/adminOrders");
 const adminUserRoutes = require("./routes/adminUsers");
 const adminMembershipRoutes = require("./routes/adminMemberships");
 const adminRoleRoutes = require("./routes/adminRoles");
+const proxyRoutes = require("./routes/proxy");
+
 
 const app = express();
 app.use(express.json());
@@ -107,6 +109,7 @@ app.use("/admin/orders", adminOrdersRoutes);
 app.use("/admin/users", adminUserRoutes);
 app.use("/admin/memberships", adminMembershipRoutes);
 app.use("/admin/roles", adminRoleRoutes);
+app.use("/proxy", proxyRoutes);
 
 // 404 handler
 app.use((req, res, next) => {
