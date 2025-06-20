@@ -11,7 +11,7 @@
           <!-- Product Image -->
           <div class="col-md-6 text-center mb-4 mb-md-0">
             <img
-            src="<%= item.Product.imgurl ? '/proxy/image?url=' + encodeURIComponent(item.Product.imgurl) : 'https://via.placeholder.com/300x200' %>"
+            src="<%= product.imgurl ? '/proxy/image?url=' + encodeURIComponent(product.imgurl) : 'https://via.placeholder.com/300x200' %>"
               alt="<%= product.name || 'Product Name' %>"
               class="product-image rounded shadow" />
           </div>

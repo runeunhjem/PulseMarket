@@ -7,7 +7,7 @@
     <td>
       <a href="/products/<%= product.id %>" class="text-decoration-none">
         <img
-          src="<%= item.Product.imgurl ? '/proxy/image?url=' + encodeURIComponent(item.Product.imgurl) : 'https://via.placeholder.com/300x200' %>"
+          src="<%= product.imgurl ? '/proxy/image?url=' + encodeURIComponent(product.imgurl) : 'https://via.placeholder.com/300x200' %>"
           alt="Image for <%= product.name %>"
           class="admin-product-image" />
       </a>
