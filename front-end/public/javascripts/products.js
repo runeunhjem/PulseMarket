@@ -1,14 +1,7 @@
 import { showWarningModal } from "/javascripts/utils/showWarningModal.js";
+import { fetchWithAuth } from "/javascripts/utils/fetchWithAuth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const token =
-    document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("token="))
-      ?.split("=")[1] || "";
-
-  const authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
-
   attachProductListeners();
 
   const addProductForm = document.getElementById("addProductForm");
@@ -29,14 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       try {
-        const res = await fetch(`/api/products`, {
+        await fetchWithAuth("/api/products", {
           method: "POST",
-          headers: { "Content-Type": "application/json", ...authHeaders },
           body: JSON.stringify(newProduct),
         });
-
-        const data = await res.json();
-        if (!data.success) throw new Error(data.message);
 
         bootstrap.Modal.getInstance(addModal)?.hide();
         await reloadProductTable();
@@ -49,14 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function attachProductListeners() {
-  const token =
-    document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("token="))
-      ?.split("=")[1] || "";
-
-  const authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
-
   const editModal = document.getElementById("editModal");
   const deleteModal = document.getElementById("deleteModal");
   const restoreModal = document.getElementById("restoreModal");
@@ -91,14 +72,10 @@ function attachProductListeners() {
         };
 
         try {
-          const res = await fetch(`/api/products/${product.id}`, {
+          await fetchWithAuth(`/api/products/${product.id}`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json", ...authHeaders },
             body: JSON.stringify(updated),
           });
-
-          const data = await res.json();
-          if (!data.success) throw new Error(data.message);
 
           bootstrap.Modal.getInstance(editModal)?.hide();
           await reloadProductTable();
@@ -123,12 +100,9 @@ function attachProductListeners() {
       form.onsubmit = async (e) => {
         e.preventDefault();
         try {
-          const res = await fetch(`/api/products/${productId}`, {
+          await fetchWithAuth(`/api/products/${productId}`, {
             method: "DELETE",
-            headers: authHeaders,
           });
-          const data = await res.json();
-          if (!data.success) throw new Error(data.message);
 
           bootstrap.Modal.getInstance(deleteModal)?.hide();
           await reloadProductTable();
@@ -153,12 +127,9 @@ function attachProductListeners() {
       form.onsubmit = async (e) => {
         e.preventDefault();
         try {
-          const res = await fetch(`/api/products/${productId}/restore`, {
+          await fetchWithAuth(`/api/products/${productId}/restore`, {
             method: "PATCH",
-            headers: authHeaders,
           });
-          const data = await res.json();
-          if (!data.success) throw new Error(data.message);
 
           bootstrap.Modal.getInstance(restoreModal)?.hide();
           await reloadProductTable();
@@ -177,13 +148,10 @@ function attachProductListeners() {
       const isChecked = toggle.checked;
 
       try {
-        const response = await fetch(`/api/products/${productId}${isChecked ? "" : "/restore"}`, {
+        await fetchWithAuth(`/api/products/${productId}${isChecked ? "" : "/restore"}`, {
           method: isChecked ? "DELETE" : "PATCH",
-          headers: { "Content-Type": "application/json", ...authHeaders },
         });
 
-        const result = await response.json();
-        if (!result.success) throw new Error(result.message);
         await reloadProductTable();
       } catch (err) {
         console.error("❌ Toggle failed:", err.message);

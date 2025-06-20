@@ -19,22 +19,23 @@ router.get("/categories", async (req, res) => {
 
 // Brands
 router.get("/brands", async (req, res) => {
-  try {
-    const response = await fetch(
-      `${BACKEND_URL}/brands${req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : ""}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${req.session.token}`,
-        },
-      }
-    );
+  const token = req.cookies.token || req.session.token || "";
+  const queryParams = req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : "";
 
-    const data = await response.json();
-    res.status(response.status).json(data);
+  try {
+    const response = await axios.get(`${BACKEND_URL}/brands${queryParams}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    res.status(response.status).json(response.data);
   } catch (err) {
-    console.error("❌ Error in /api/brands:", err);
-    res.status(500).json({ success: false, message: "Failed to load brands." });
+    console.error("❌ Error in /api/brands:", err.message);
+    res.status(err.response?.status || 500).json(
+      err.response?.data || { success: false, message: "Failed to load brands." }
+    );
   }
 });
 

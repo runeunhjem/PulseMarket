@@ -1,4 +1,6 @@
-export async function fetchWithAuth(url, options = {}) {
+import BACKEND_URL from "./backendUrl.js";
+
+export async function fetchWithAuth(endpoint, options = {}) {
   const token = sessionStorage.getItem("token");
 
   const headers = {
@@ -7,6 +9,8 @@ export async function fetchWithAuth(url, options = {}) {
     ...options.headers,
   };
 
+  const url = endpoint.startsWith("http") ? endpoint : `${BACKEND_URL}${endpoint}`;
+
   try {
     const res = await fetch(url, {
       ...options,
@@ -14,7 +18,6 @@ export async function fetchWithAuth(url, options = {}) {
     });
 
     const contentType = res.headers.get("content-type");
-
     const isJson = contentType && contentType.includes("application/json");
     const body = isJson ? await res.json().catch(() => ({})) : {};
 

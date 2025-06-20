@@ -1,4 +1,5 @@
 import { showWarningModal } from "/javascripts/utils/showWarningModal.js";
+import { fetchWithAuth } from "/javascripts/utils/fetchWithAuth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("order-search");
@@ -25,28 +26,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const newStatus = form.querySelector("select").value;
 
       try {
-        const response = await fetch(`/admin/orders/${orderId}/status`, {
+        const result = await fetchWithAuth(`/admin/orders/${orderId}/status`, {
           method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify({ status: newStatus }),
         });
 
-        const result = await response.json();
-
-        if (result.success) {
-          showWarningModal(result.message);
-          setTimeout(() => location.reload(), 1500);
-        } else {
-          showWarningModal("⚠️ " + result.message);
-        }
+        showWarningModal(result.message);
+        setTimeout(() => location.reload(), 1500);
       } catch (err) {
         console.error(err);
         showWarningModal("❌ Failed to update order status.");
       }
     });
   });
-
-
 });
